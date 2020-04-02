@@ -23,6 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -31,7 +32,6 @@ import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.dd.CircularProgressButton;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.nightonke.saver.BuildConfig;
@@ -202,7 +202,6 @@ public class AccountBookSettingActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        SuperToast.cancelAllSuperToasts();
         super.onBackPressed();
     }
 
@@ -1335,7 +1334,6 @@ public class AccountBookSettingActivity extends AppCompatActivity
         updateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoCoinUtil.showToast(mContext, mContext.getResources().getString(R.string.checking_update), SuperToast.Background.BLUE);
                 AppUpdateManager appUpdateManager = new AppUpdateManager(mContext);
                 appUpdateManager.checkUpdateInfo(true);
             }
@@ -1660,54 +1658,44 @@ public class AccountBookSettingActivity extends AppCompatActivity
     @Override
     public void finish() {
 
-        SuperToast.cancelAllSuperToasts();
 
         super.finish();
+    }
+
+    private void toast(int msg) {
+        Toast.makeText(this, getString(msg), Toast.LENGTH_LONG).show();
+    }
+    private void toast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
 // Show toast///////////////////////////////////////////////////////////////////////////////////////
     private void showToast(int toastType, String msg) {
         Log.d("CoCoin", msg);
-        SuperToast.cancelAllSuperToasts();
-        SuperToast superToast = new SuperToast(mContext);
-
-        superToast.setAnimations(CoCoinUtil.TOAST_ANIMATION);
-        superToast.setDuration(SuperToast.Duration.LONG);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
 
         String tip = "";
 
         switch (toastType) {
             case 0:
                 // the new account book name is updated to server successfully
-                superToast.setText(CoCoinApplication.getAppContext().getResources().getString(
-                        R.string.change_and_update_account_book_name_successfully));
-                superToast.setBackground(SuperToast.Background.BLUE);
+                toast(R.string.change_and_update_account_book_name_successfully);
                 break;
             case 1:
                 // the new account book name is failed to updated to server
-                superToast.setText(CoCoinApplication.getAppContext().getResources().getString(
-                        R.string.change_and_update_account_book_name_fail));
-                superToast.setBackground(SuperToast.Background.RED);
+                toast(R.string.change_and_update_account_book_name_fail);
                 break;
             case 2:
                 // the new account book name is changed successfully
-                superToast.setText(CoCoinApplication.getAppContext().getResources().getString(
-                        R.string.change_account_book_name_successfully));
-                superToast.setBackground(SuperToast.Background.BLUE);
+                toast(R.string.change_account_book_name_successfully);
                 break;
             case 3:
                 // the new account book name is failed to change
-                superToast.setText(CoCoinApplication.getAppContext().getResources().getString(
-                        R.string.change_account_book_name_fail));
-                superToast.setBackground(SuperToast.Background.RED);
+                toast(R.string.change_account_book_name_fail);
                 break;
             case 4:
                 // register successfully
                 tip = msg;
-                superToast.setText(getResourceString(R.string.register_successfully) + tip);
-                superToast.setBackground(SuperToast.Background.BLUE);
+                toast(getResourceString(R.string.register_successfully) + tip);
                 break;
             case 5:
                 // register failed
@@ -1715,43 +1703,41 @@ public class AccountBookSettingActivity extends AppCompatActivity
                 if (msg.charAt(1) == 's') tip = getResourceString(R.string.user_name_exist);
                 if (msg.charAt(0) == 'e') tip = getResourceString(R.string.user_email_exist);
                 if (msg.charAt(1) == 'n') tip = getResourceString(R.string.user_mobile_exist);
-                superToast.setText(getResourceString(R.string.register_fail) + tip);
-                superToast.setBackground(SuperToast.Background.RED);
+                toast(getResourceString(R.string.register_fail) + tip);
+
                 break;
             case 6:
                 // login successfully
                 tip = msg;
-                superToast.setText(getResourceString(R.string.login_successfully) + tip);
-                superToast.setBackground(SuperToast.Background.BLUE);
+                toast(getResourceString(R.string.login_successfully) + tip);
+
                 break;
             case 7:
                 // login failed
                 tip = getResourceString(R.string.network_disconnection);
                 if (msg.charAt(0) == 'u') tip = getResourceString(R.string.user_name_or_password_incorrect);
                 if (msg.charAt(1) == 'n') tip = getResourceString(R.string.user_mobile_exist);
-                superToast.setText(getResourceString(R.string.login_fail) + tip);
-                superToast.setBackground(SuperToast.Background.RED);
+                toast(getResourceString(R.string.login_fail) + tip);
+
                 break;
             case 8:
                 // log out successfully
-                superToast.setText(getResourceString(R.string.log_out_successfully));
-                superToast.setBackground(SuperToast.Background.BLUE);
+                toast(getResourceString(R.string.log_out_successfully));
+
                 break;
             case 9:
                 // sync settings successfully
-                superToast.setText(getResourceString(R.string.sync_to_server_successfully));
-                superToast.setBackground(SuperToast.Background.BLUE);
+                toast(getResourceString(R.string.sync_to_server_successfully));
+
                 break;
             case 10:
                 // sync settings failed
                 tip = getResourceString(R.string.network_disconnection);
-                superToast.setText(getResourceString(R.string.sync_to_server_failed) + tip);
-                superToast.setBackground(SuperToast.Background.RED);
+                toast(getResourceString(R.string.sync_to_server_failed) + tip);
+
                 break;
 
         }
-        superToast.getTextView().setTypeface(CoCoinUtil.GetTypeface());
-        superToast.show();
     }
 
 }

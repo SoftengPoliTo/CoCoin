@@ -10,7 +10,7 @@
     <color name="white">#ffffff</color>
 
     <color name="color_alizarin">#e74c3c</color>
-
+    <color name="black">#000</color>
     <color name="book_loading_background">#2196F3</color>
     <color name="book_loading_book">#ffffff</color>
     <color name="book_loading_page">#2196F3</color>

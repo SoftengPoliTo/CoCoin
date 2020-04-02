@@ -1,8 +1,9 @@
 package com.nightonke.saver.util;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.widget.Toast;
 
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.nightonke.saver.activity.CoCoinApplication;
 
 /**
@@ -18,29 +19,13 @@ public class CoCoinToast {
     private CoCoinToast() {
     }
 
-    public void showToast(int text, int color) {
-        SuperToast.cancelAllSuperToasts();
-        SuperToast superToast = new SuperToast(CoCoinApplication.getAppContext());
-        superToast.setAnimations(CoCoinUtil.TOAST_ANIMATION);
-        superToast.setDuration(SuperToast.Duration.SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-        superToast.setText(CoCoinApplication.getAppContext().getResources().getString(text));
-        superToast.setBackground(color);
-        superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
-        superToast.show();
+    public void showToast(Context context, int text, int color) {
+        Toast.makeText(context, context.getString(text), Toast.LENGTH_LONG).show();
     }
 
-    public void showToast(String text, int color) {
-        SuperToast.cancelAllSuperToasts();
-        SuperToast superToast = new SuperToast(CoCoinApplication.getAppContext());
-        superToast.setAnimations(CoCoinUtil.TOAST_ANIMATION);
-        superToast.setDuration(SuperToast.Duration.SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-        superToast.setText(text);
-        superToast.setBackground(color);
-        superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
-        superToast.show();
+    public void showToast(Context context,String text, int color) {
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
+
+
 }

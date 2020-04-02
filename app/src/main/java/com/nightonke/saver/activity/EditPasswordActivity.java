@@ -1,7 +1,6 @@
 package com.nightonke.saver.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,13 +20,11 @@ import android.view.animation.Interpolator;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.github.johnpersano.supertoasts.SuperToast;
+import android.widget.Toast;
 import com.nightonke.saver.R;
 import com.nightonke.saver.adapter.PasswordChangeButtonGridViewAdapter;
 import com.nightonke.saver.adapter.PasswordChangeFragmentAdapter;
 import com.nightonke.saver.fragment.CoCoinFragmentManager;
-import com.nightonke.saver.fragment.PasswordChangeFragment;
 import com.nightonke.saver.model.SettingManager;
 import com.nightonke.saver.model.User;
 import com.nightonke.saver.ui.FixedSpeedScroller;
@@ -63,7 +60,6 @@ public class EditPasswordActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private FragmentPagerAdapter adapter;
 
-    private SuperToast superToast;
 
     private float x1, y1, x2, y2;
 
@@ -85,11 +81,11 @@ public class EditPasswordActivity extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(ContextCompat.getColor(mContext, R.color.statusBarColor));
-        } else{
+        } else {
             // do something for phones running an SDK before lollipop
         }
 
-        viewPager = (ViewPager)findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         try {
             Interpolator sInterpolator = new AccelerateInterpolator();
@@ -112,7 +108,7 @@ public class EditPasswordActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
 
-        myGridView = (MyGridView)findViewById(R.id.gridview);
+        myGridView = (MyGridView) findViewById(R.id.gridview);
         myGridViewAdapter = new PasswordChangeButtonGridViewAdapter(this);
         myGridView.setAdapter(myGridViewAdapter);
 
@@ -131,7 +127,7 @@ public class EditPasswordActivity extends AppCompatActivity {
                     }
                 });
 
-        back = (MaterialIconView)findViewById(R.id.back);
+        back = (MaterialIconView) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,9 +135,7 @@ public class EditPasswordActivity extends AppCompatActivity {
             }
         });
 
-        superToast = new SuperToast(this);
-
-        title = (TextView)findViewById(R.id.title);
+        title = (TextView) findViewById(R.id.title);
         title.setTypeface(CoCoinUtil.typefaceLatoLight);
         if (SettingManager.getInstance().getFirstTime()) {
             title.setText(mContext.getResources().getString(R.string.app_name));
@@ -154,13 +148,11 @@ public class EditPasswordActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        SuperToast.cancelAllSuperToasts();
         overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
     }
 
     @Override
     public void finish() {
-        SuperToast.cancelAllSuperToasts();
         super.finish();
     }
 
@@ -305,47 +297,27 @@ public class EditPasswordActivity extends AppCompatActivity {
         }
     }
 
+    private void toast(int message) {
+        Toast.makeText(this, getString(message), Toast.LENGTH_LONG).show();
+    }
+
     private void showToast(int toastType) {
-        SuperToast.cancelAllSuperToasts();
-
-        superToast.setAnimations(CoCoinUtil.TOAST_ANIMATION);
-        superToast.setDuration(SuperToast.Duration.SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-
         switch (toastType) {
             // old password wrong
             case 0:
-
-                superToast.setText(
-                        mContext.getResources().getString(R.string.toast_password_wrong));
-                superToast.setBackground(SuperToast.Background.RED);
-                superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
-
+                toast(R.string.toast_password_wrong);
                 break;
             // password is different
             case 1:
-
-                superToast.setText(
-                        mContext.getResources().getString(R.string.different_password));
-                superToast.setBackground(SuperToast.Background.RED);
-                superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
-
+                toast(R.string.different_password);
                 break;
             // success
             case 2:
-
-                superToast.setText(
-                        mContext.getResources().getString(R.string.set_password_successfully));
-                superToast.setBackground(SuperToast.Background.GREEN);
-                superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
-
+                toast(R.string.set_password_successfully);
                 break;
             default:
                 break;
         }
-
-        superToast.show();
     }
 
     @Override

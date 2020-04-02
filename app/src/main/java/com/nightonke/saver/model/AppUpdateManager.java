@@ -9,10 +9,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.nightonke.saver.R;
 import com.nightonke.saver.activity.CoCoinApplication;
 import com.nightonke.saver.util.CoCoinUtil;
@@ -95,7 +95,7 @@ public class AppUpdateManager {
             @Override
             public void onSuccess(final List<APK> object) {
                 if (object.size() == 0 && showInfo) {
-                    CoCoinUtil.showToast(context, context.getResources().getString(R.string.is_newest_version), SuperToast.Background.BLUE);
+                    Toast.makeText(context, context.getString(R.string.is_newest_version), Toast.LENGTH_LONG).show();
                 }
                 BmobQuery<APK> tooOldQuery = new BmobQuery<>();
                 tooOldQuery.addWhereEqualTo("version", CoCoinApplication.VERSION);

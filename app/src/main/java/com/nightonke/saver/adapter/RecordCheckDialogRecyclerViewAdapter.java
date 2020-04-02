@@ -17,8 +17,6 @@ import com.nightonke.saver.util.CoCoinUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by 伟平 on 2015/11/1.
@@ -83,22 +81,27 @@ public class RecordCheckDialogRecyclerViewAdapter extends RecyclerView.Adapter<R
     }
 
     public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @InjectView(R.id.image_view)
+        
         ImageView imageView;
-        @InjectView(R.id.date)
+        
         TextView date;
-        @InjectView(R.id.remark)
+        
         TextView remark;
-        @InjectView(R.id.money)
+        
         TextView money;
-        @InjectView(R.id.index)
+        
         TextView index;
-        @InjectView(R.id.material_ripple_layout)
+        
         MaterialRippleLayout layout;
 
         viewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            imageView = view.findViewById(R.id.image_view);
+            date = view.findViewById(R.id.date);
+            remark = view.findViewById(R.id.remark);
+            money = view.findViewById(R.id.money);
+            index = view.findViewById(R.id.index);
+            layout = view.findViewById(R.id.material_ripple_layout);
         }
 
         @Override

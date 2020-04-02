@@ -18,9 +18,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.BaseViewAnimator;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.nightonke.saver.BuildConfig;
 import com.nightonke.saver.R;
 import com.nightonke.saver.activity.CoCoinApplication;
@@ -55,7 +55,6 @@ public class CoCoinUtil {
 
     public static String LOGO_NAME = "logo.jpg";
 
-    public static SuperToast.Animations TOAST_ANIMATION = SuperToast.Animations.FLYIN;
 
     public static int MY_BLUE;
 
@@ -993,51 +992,16 @@ public class CoCoinUtil {
     }
 
     public static void showToast(Context context, String text, int color) {
-        SuperToast.cancelAllSuperToasts();
-        SuperToast superToast = new SuperToast(context);
-        superToast.setAnimations(SuperToast.Animations.FLYIN);
-        superToast.setDuration(SuperToast.Duration.SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-        superToast.setText(text);
-        superToast.setBackground(color);
-        superToast.show();
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 
     private static String lastToast = "";
     public static void showToast(Context context, String text) {
-        if (context == null) return;
-        if (lastToast.equals(text)) {
-            SuperToast.cancelAllSuperToasts();
-        } else {
-            lastToast = text;
-        }
-        SuperToast superToast = new SuperToast(context);
-        superToast.setAnimations(SuperToast.Animations.FLYIN);
-        superToast.setDuration(SuperToast.Duration.VERY_SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-        superToast.setText(text);
-        superToast.setBackground(SuperToast.Background.BLUE);
-        superToast.show();
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 
     public static void showToast(Context context, int textId) {
-        String text = context.getResources().getString(textId);
-        if (context == null) return;
-        if (lastToast.equals(text)) {
-            SuperToast.cancelAllSuperToasts();
-        } else {
-            lastToast = text;
-        }
-        SuperToast superToast = new SuperToast(context);
-        superToast.setAnimations(SuperToast.Animations.FLYIN);
-        superToast.setDuration(SuperToast.Duration.VERY_SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-        superToast.setText(text);
-        superToast.setBackground(SuperToast.Background.BLUE);
-        superToast.show();
+        Toast.makeText(context, context.getString(textId), Toast.LENGTH_LONG).show();
     }
 
     public static boolean isPointInsideView(float x, float y, View view){

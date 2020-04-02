@@ -2,7 +2,6 @@ package com.nightonke.saver.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -16,9 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.nightonke.saver.R;
 import com.nightonke.saver.adapter.ButtonGridViewAdapter;
 import com.nightonke.saver.adapter.EditMoneyRemarkFragmentAdapter;
@@ -28,7 +26,6 @@ import com.nightonke.saver.fragment.TagChooseFragment;
 import com.nightonke.saver.model.CoCoinRecord;
 import com.nightonke.saver.model.RecordManager;
 import com.nightonke.saver.ui.CoCoinScrollableViewPager;
-import com.nightonke.saver.ui.CoCoinUnscrollableViewPager;
 import com.nightonke.saver.ui.MyGridView;
 import com.nightonke.saver.util.CoCoinUtil;
 
@@ -56,7 +53,6 @@ public class EditRecordActivity extends AppCompatActivity
     private final int SAVE_SUCCESSFULLY_TOAST = 4;
     private final int SAVE_FAILED_TOAST = 5;
 
-    private SuperToast superToast;
 
     private MaterialIconView back;
 
@@ -68,7 +64,6 @@ public class EditRecordActivity extends AppCompatActivity
 
         mContext = this;
 
-        superToast = new SuperToast(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -87,12 +82,12 @@ public class EditRecordActivity extends AppCompatActivity
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(ContextCompat.getColor(mContext, R.color.statusBarColor));
-        } else{
+        } else {
             // do something for phones running an SDK before lollipop
         }
 
 // edit viewpager///////////////////////////////////////////////////////////////////////////////////
-        editViewPager = (CoCoinScrollableViewPager)findViewById(R.id.edit_pager);
+        editViewPager = (CoCoinScrollableViewPager) findViewById(R.id.edit_pager);
         editViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         editAdapter = new EditMoneyRemarkFragmentAdapter(
@@ -120,9 +115,9 @@ public class EditRecordActivity extends AppCompatActivity
         });
 
         editViewPager.setAdapter(editAdapter);
-        
+
 // tag viewpager////////////////////////////////////////////////////////////////////////////////////
-        tagViewPager = (ViewPager)findViewById(R.id.viewpager);
+        tagViewPager = (ViewPager) findViewById(R.id.viewpager);
         tagViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         if (RecordManager.TAGS.size() % 8 == 0)
@@ -131,8 +126,8 @@ public class EditRecordActivity extends AppCompatActivity
             tagAdapter = new TagChooseFragmentAdapter(getSupportFragmentManager(), RecordManager.TAGS.size() / 8 + 1);
 
         tagViewPager.setAdapter(tagAdapter);
-        
-        myGridView = (MyGridView)findViewById(R.id.gridview);
+
+        myGridView = (MyGridView) findViewById(R.id.gridview);
         myGridViewAdapter = new ButtonGridViewAdapter(this);
         myGridView.setAdapter(myGridViewAdapter);
 
@@ -151,7 +146,7 @@ public class EditRecordActivity extends AppCompatActivity
                     }
                 });
 
-        back = (MaterialIconView)findViewById(R.id.back);
+        back = (MaterialIconView) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,8 +214,8 @@ public class EditRecordActivity extends AppCompatActivity
                 } else {
                     CoCoinFragmentManager.editRecordActivityEditMoneyFragment.setNumberText(
                             CoCoinFragmentManager.editRecordActivityEditMoneyFragment.getNumberText().toString()
-                            .substring(0, CoCoinFragmentManager.editRecordActivityEditMoneyFragment
-                                    .getNumberText().toString().length() - 1));
+                                    .substring(0, CoCoinFragmentManager.editRecordActivityEditMoneyFragment
+                                            .getNumberText().toString().length() - 1));
                     if (CoCoinFragmentManager.editRecordActivityEditMoneyFragment.getNumberText().toString().length() == 0) {
                         CoCoinFragmentManager.editRecordActivityEditMoneyFragment.setNumberText("0");
                         CoCoinFragmentManager.editRecordActivityEditMoneyFragment.setHelpText(" ");
@@ -248,7 +243,7 @@ public class EditRecordActivity extends AppCompatActivity
             showToast(NO_TAG_TOAST);
         } else if (CoCoinFragmentManager.editRecordActivityEditMoneyFragment.getNumberText().toString().equals("0")) {
             showToast(NO_MONEY_TOAST);
-        } else  {
+        } else {
             CoCoinRecord coCoinRecord = new CoCoinRecord();
             coCoinRecord.set(RecordManager.SELECTED_RECORDS.get(RecordManager.getInstance(mContext).SELECTED_RECORDS.size() - 1 - position));
             coCoinRecord.setMoney(Float.valueOf(CoCoinFragmentManager.editRecordActivityEditMoneyFragment.getNumberText().toString()));
@@ -256,9 +251,7 @@ public class EditRecordActivity extends AppCompatActivity
             coCoinRecord.setRemark(CoCoinFragmentManager.editRecordActivityEditRemarkFragment.getRemark());
             long updateId = RecordManager.updateRecord(coCoinRecord);
             if (updateId == -1) {
-                if (!superToast.isShowing()) {
-                    showToast(SAVE_FAILED_TOAST);
-                }
+                showToast(SAVE_FAILED_TOAST);
             } else {
                 IS_CHANGED = true;
                 RecordManager.SELECTED_RECORDS.set(RecordManager.getInstance(mContext).SELECTED_RECORDS.size() - 1 - position, coCoinRecord);
@@ -273,44 +266,24 @@ public class EditRecordActivity extends AppCompatActivity
         }
     }
 
+    private void toast(int message) {
+        Toast.makeText(this, getString(message), Toast.LENGTH_LONG).show();
+    }
+
     private void showToast(int toastType) {
-        SuperToast.cancelAllSuperToasts();
-        SuperActivityToast.cancelAllSuperActivityToasts();
-
-        superToast.setAnimations(CoCoinUtil.TOAST_ANIMATION);
-        superToast.setDuration(SuperToast.Duration.SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-
         switch (toastType) {
             case NO_MONEY_TOAST:
-
-                superToast.setText(mContext.getResources().getString(R.string.toast_no_money));
-                superToast.setBackground(SuperToast.Background.BLUE);
-                superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
-
+                toast(R.string.toast_no_money);
                 break;
             case SAVE_SUCCESSFULLY_TOAST:
-
-                superToast.setText(
-                        mContext.getResources().getString(R.string.toast_save_successfully));
-                superToast.setBackground(SuperToast.Background.GREEN);
-                superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
-
+                toast(R.string.toast_save_successfully);
                 break;
             case SAVE_FAILED_TOAST:
-
-                superToast.setText(mContext.getResources().getString(R.string.toast_save_failed));
-                superToast.setBackground(SuperToast.Background.RED);
-                superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
-
+                toast(R.string.toast_save_failed);
                 break;
             default:
-
                 break;
         }
-
-        superToast.show();
     }
 
     @Override
@@ -324,6 +297,7 @@ public class EditRecordActivity extends AppCompatActivity
     }
 
     private float x1, x2, y1, y2;
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 

@@ -33,7 +33,6 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.nightonke.saver.BuildConfig;
@@ -120,7 +119,7 @@ public class AccountBookTodayViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_book_today_view);
-        SuperToast.cancelAllSuperToasts();
+        setContentView(R.layout.activity_account_book_today_view);
 
         mContext = this;
 

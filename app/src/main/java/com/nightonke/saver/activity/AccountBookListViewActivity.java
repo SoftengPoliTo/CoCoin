@@ -33,6 +33,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -40,7 +41,6 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
@@ -874,7 +874,6 @@ public class AccountBookListViewActivity extends AppCompatActivity
         mAdapter = null;
         layoutManager = null;
 
-        SuperToast.cancelAllSuperToasts();
 
 //        titleSlider.stopAutoCycle();
 //        titleSlider.removeAllSliders();
@@ -1082,7 +1081,7 @@ public class AccountBookListViewActivity extends AppCompatActivity
             to.add(Calendar.SECOND, 0);
 
             if (to.before(from)) {
-                CoCoinUtil.showToast(mContext, mContext.getResources().getString(R.string.from_invalid), SuperToast.Background.RED);
+                Toast.makeText(this,R.string.from_invalid,Toast.LENGTH_LONG).show();
             } else {
                 LEFT_CALENDAR = (Calendar)from.clone();
                 RIGHT_CALENDAR = (Calendar)to.clone();

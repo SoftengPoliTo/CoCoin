@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.melnykov.fab.FloatingActionButton;
 import com.nightonke.saver.R;
@@ -72,8 +72,6 @@ public class CustomViewFragment extends Fragment {
     private Calendar from = Calendar.getInstance();
     private Calendar to = Calendar.getInstance();
 
-    private SuperToast superToast;
-
     private int start = -1;
     private int end = -1;
     private int Sum = 0;
@@ -115,17 +113,14 @@ public class CustomViewFragment extends Fragment {
         return fragment;
     }
 
+    private void toast(int message) {
+        Toast.makeText(getActivity(), getString(message), Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
-        superToast = new SuperToast(mContext);
-        superToast.setAnimations(SuperToast.Animations.POPUP);
-        superToast.setDuration(SuperToast.Duration.SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-        superToast.setBackground(SuperToast.Background.RED);
-        superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
     }
 
     @Override
@@ -144,25 +139,25 @@ public class CustomViewFragment extends Fragment {
 
         MaterialViewPagerHelper.registerScrollView(getActivity(), mScrollView, null);
 
-        fromDate = (TextView)view.findViewById(R.id.from_date);
+        fromDate = (TextView) view.findViewById(R.id.from_date);
         fromDate.setTypeface(CoCoinUtil.GetTypeface());
 
-        expense = (TextView)view.findViewById(R.id.expense);
+        expense = (TextView) view.findViewById(R.id.expense);
         expense.setTypeface(CoCoinUtil.typefaceLatoLight);
         expense.setText(CoCoinUtil.GetInMoney(0));
 
-        pie = (PieChartView)view.findViewById(R.id.chart_pie);
+        pie = (PieChartView) view.findViewById(R.id.chart_pie);
         pie.setVisibility(View.INVISIBLE);
 
-        iconRight = (MaterialIconView)view.findViewById(R.id.icon_right);
-        iconLeft = (MaterialIconView)view.findViewById(R.id.icon_left);
+        iconRight = (MaterialIconView) view.findViewById(R.id.icon_right);
+        iconLeft = (MaterialIconView) view.findViewById(R.id.icon_left);
         iconRight.setVisibility(View.INVISIBLE);
         iconLeft.setVisibility(View.INVISIBLE);
 
-        all = (MaterialIconView)view.findViewById(R.id.all);
+        all = (MaterialIconView) view.findViewById(R.id.all);
         all.setVisibility(View.INVISIBLE);
 
-        emptyTip = (TextView)view.findViewById(R.id.empty_tip);
+        emptyTip = (TextView) view.findViewById(R.id.empty_tip);
         emptyTip.setTypeface(CoCoinUtil.GetTypeface());
 
         if (IS_EMPTY) {
@@ -186,7 +181,7 @@ public class CustomViewFragment extends Fragment {
                             now.get(Calendar.DAY_OF_MONTH)
                     );
                     dpd.setTitle(mContext.getResources().getString(R.string.set_right_calendar));
-                    dpd.show(((Activity)mContext).getFragmentManager(), "Datepickerdialog");
+                    dpd.show(((Activity) mContext).getFragmentManager(), "Datepickerdialog");
                     isFrom = false;
                 } else {
                     from.set(fromYear, fromMonth - 1, fromDay, 0, 0, 0);
@@ -196,12 +191,9 @@ public class CustomViewFragment extends Fragment {
                     to.add(Calendar.SECOND, 0);
 
                     if (to.before(from)) {
-                        superToast.setText(
-                                mContext.getResources().getString(R.string.from_invalid));
-                        superToast.setText(
-                                mContext.getResources().getString(R.string.to_invalid));
-                        SuperToast.cancelAllSuperToasts();
-                        superToast.show();
+                        toast(R.string.from_invalid);
+                        toast(R.string.to_invalid);
+
                     } else {
                         fromDate.setText(" ● " +
                                 mContext.getResources().getString(R.string.from) + " " +
@@ -210,7 +202,7 @@ public class CustomViewFragment extends Fragment {
                                 from.get(Calendar.YEAR) + " " +
                                 mContext.getResources().getString(R.string.to) + " " +
                                 CoCoinUtil.GetMonthShort(to.get(Calendar.MONTH) + 1)
-                                + " " + to.get(Calendar.DAY_OF_MONTH)  + CoCoinUtil.GetWhetherFuck() +
+                                + " " + to.get(Calendar.DAY_OF_MONTH) + CoCoinUtil.GetWhetherFuck() +
                                 to.get(Calendar.YEAR));
                         select();
                     }
@@ -230,7 +222,7 @@ public class CustomViewFragment extends Fragment {
                         now.get(Calendar.DAY_OF_MONTH)
                 );
                 dpd.setTitle(mContext.getResources().getString(R.string.set_left_calendar));
-                dpd.show(((Activity)mContext).getFragmentManager(), "Datepickerdialog");
+                dpd.show(((Activity) mContext).getFragmentManager(), "Datepickerdialog");
                 isFrom = true;
             }
         });
@@ -276,7 +268,7 @@ public class CustomViewFragment extends Fragment {
             }
         }
 
-        startDayCalendar = (Calendar)from.clone();
+        startDayCalendar = (Calendar) from.clone();
         startDayCalendar.set(Calendar.HOUR_OF_DAY, 0);
         startDayCalendar.set(Calendar.MINUTE, 0);
         startDayCalendar.set(Calendar.SECOND, 0);
@@ -285,7 +277,7 @@ public class CustomViewFragment extends Fragment {
 
         TagExpanse = new TreeMap<>();
         Expanse = new HashMap<>();
-        originalTargets = new float[(int)days];
+        originalTargets = new float[(int) days];
 
         int size = RecordManager.TAGS.size();
         for (int j = 2; j < size; j++) {
@@ -299,7 +291,7 @@ public class CustomViewFragment extends Fragment {
                     TagExpanse.get(coCoinRecord.getTag()) + Double.valueOf(coCoinRecord.getMoney()));
             Expanse.get(coCoinRecord.getTag()).add(coCoinRecord);
             Sum += coCoinRecord.getMoney();
-            originalTargets[(int)(TimeUnit.MILLISECONDS.toDays(
+            originalTargets[(int) (TimeUnit.MILLISECONDS.toDays(
                     coCoinRecord.getCalendar().getTimeInMillis()) - startDay)] += coCoinRecord.getMoney();
         }
 
@@ -313,7 +305,7 @@ public class CustomViewFragment extends Fragment {
         for (Map.Entry<Integer, Double> entry : TagExpanse.entrySet()) {
             if (entry.getValue() >= 1) {
                 SliceValue sliceValue = new SliceValue(
-                        (float)(double)entry.getValue(),
+                        (float) (double) entry.getValue(),
                         CoCoinUtil.GetTagColor(entry.getKey()));
                 sliceValue.setLabel(String.valueOf(entry.getKey()));
                 sliceValues.add(sliceValue);
@@ -465,7 +457,7 @@ public class CustomViewFragment extends Fragment {
                             to.get(Calendar.YEAR) + " " +
                             "in " + CoCoinUtil.GetTagName(tagId);
                 }
-                ((FragmentActivity)mContext).getSupportFragmentManager()
+                ((FragmentActivity) mContext).getSupportFragmentManager()
                         .beginTransaction()
                         .add(new RecordCheckDialogFragment(
                                 mContext, data, dialogTitle), "MyDialog")
@@ -478,7 +470,7 @@ public class CustomViewFragment extends Fragment {
         @Override
         public void onActionClicked(Snackbar snackbar) {
             List<CoCoinRecord> shownCoCoinRecords = Expanse.get(tagId);
-            ((FragmentActivity)mContext).getSupportFragmentManager()
+            ((FragmentActivity) mContext).getSupportFragmentManager()
                     .beginTransaction()
                     .add(new RecordCheckDialogFragment(
                             mContext, shownCoCoinRecords, dialogTitle), "MyDialog")

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nightonke.saver">
 
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,6 +22,9 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,13 +72,15 @@
             android:name=".activity.AccountBookSettingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/CoCoinSettingActivityStyle" />
-        <activity android:name="com.github.mmin18.layoutcast.ResetActivity" />
+        <!--<activity android:name="com.github.mmin18.layoutcast.ResetActivity" />-->
         <activity android:name=".activity.HelpActivity" />
         <activity android:name=".activity.FeedbackActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.ShowActivity" />
+
+
     </application>
 
 </manifest>

@@ -34,9 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.Optional;
 import lecho.lib.hellocharts.listener.ColumnChartOnValueSelectListener;
 import lecho.lib.hellocharts.listener.PieChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
@@ -643,37 +640,36 @@ public class TagViewRecyclerViewAdapter
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.from)
+        
         TextView from;
-        @Optional
-        @InjectView(R.id.sum)
+
         TextView sum;
-        @Optional
-        @InjectView(R.id.to)
+
         TextView to;
-        @Optional
-        @InjectView(R.id.chart_pie)
+
         PieChartView pie;
-        @Optional
-        @InjectView(R.id.chart)
+
         ColumnChartView chart;
-        @Optional
-        @InjectView(R.id.date)
+
         TextView date;
-        @Optional
-        @InjectView(R.id.expanse)
+
         TextView expanse;
-        @Optional
-        @InjectView(R.id.icon_left)
+
         MaterialIconView iconLeft;
-        @Optional
-        @InjectView(R.id.icon_right)
+
         MaterialIconView iconRight;
 
         viewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            from = view.findViewById(R.id.from);
+            sum = view.findViewById(R.id.sum);
+            to = view.findViewById(R.id.to);
+            pie = view.findViewById(R.id.chart_pie);
+            chart =  view.findViewById(R.id.chart);
+            date = view.findViewById(R.id.date);
+            expanse = view.findViewById(R.id.expanse);
+            iconLeft = view.findViewById(R.id.icon_left);
+            iconRight =  view.findViewById(R.id.icon_right);
         }
     }
 

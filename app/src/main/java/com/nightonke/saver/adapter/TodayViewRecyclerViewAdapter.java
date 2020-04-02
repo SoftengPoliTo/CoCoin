@@ -644,64 +644,63 @@ public class TodayViewRecyclerViewAdapter
 
 // view holder class////////////////////////////////////////////////////////////////////////////////
     public static class viewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.date)
+        
         TextView date;
-        @Optional
-        @InjectView(R.id.date_bottom)
+       
         TextView dateBottom;
-        @Optional
-        @InjectView(R.id.expanse)
+        
         TextView expanseSum;
-        @Optional
-        @InjectView(R.id.empty_tip)
+        
         TextView emptyTip;
-        @Optional
-        @InjectView(R.id.chart_pie)
+        
         PieChartView pie;
-        @Optional
-        @InjectView(R.id.histogram)
+        
         ColumnChartView histogram;
-        @Optional
-        @InjectView(R.id.icon_left)
+        
         MaterialIconView iconLeft;
-        @Optional
-        @InjectView(R.id.icon_right)
+        
         MaterialIconView iconRight;
-        @Optional
-        @InjectView(R.id.histogram_icon_left)
+        
         MaterialIconView histogram_icon_left;
-        @Optional
-        @InjectView(R.id.histogram_icon_right)
+        
         MaterialIconView histogram_icon_right;
-        @Optional
-        @InjectView(R.id.icon_reset)
+        
         MaterialIconView reset;
-        @Optional
-        @InjectView(R.id.all)
+        
         MaterialIconView all;
-        @Optional
-        @InjectView(R.id.tag_image)
+        
         ImageView tagImage;
-        @Optional
-        @InjectView(R.id.money)
+        
         TextView money;
-        @Optional
-        @InjectView(R.id.cell_date)
+        
         TextView cell_date;
-        @Optional
-        @InjectView(R.id.remark)
+        
         TextView remark;
-        @Optional
-        @InjectView(R.id.index)
+        
         TextView index;
-        @Optional
-        @InjectView(R.id.material_ripple_layout)
+        
         MaterialRippleLayout layout;
 
         viewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            date = view.findViewById(R.id.date);
+            dateBottom = view.findViewById(R.id.date_bottom);
+            expanseSum = view.findViewById(R.id.expanse);
+            emptyTip = view.findViewById(R.id.empty_tip);
+            pie = view.findViewById(R.id.chart_pie);
+            histogram =view.findViewById(R.id.histogram);
+            iconLeft =view.findViewById(R.id.icon_left);
+            iconRight =view.findViewById(R.id.icon_right);
+            histogram_icon_left =view.findViewById(R.id.histogram_icon_left);
+            histogram_icon_right =view.findViewById(R.id.histogram_icon_right);
+            reset =view.findViewById(R.id.icon_reset);
+            all =view.findViewById(R.id.all);
+            tagImage =view.findViewById(R.id.tag_image);
+            money =view.findViewById(R.id.money);
+            cell_date =view.findViewById(R.id.cell_date);
+            remark =view.findViewById(R.id.remark);
+            index =view.findViewById(R.id.index);
+            layout =view.findViewById(R.id.material_ripple_layout);
         }
     }
 

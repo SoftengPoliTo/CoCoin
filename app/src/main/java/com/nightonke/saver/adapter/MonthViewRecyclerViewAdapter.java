@@ -378,34 +378,34 @@ public class MonthViewRecyclerViewAdapter
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.date)
+        
+        
         TextView date;
-        @Optional
-        @InjectView(R.id.expanse)
+
         TextView expanseSum;
-        @Optional
-        @InjectView(R.id.tags)
+        
         TextView tags;
-        @Optional
-        @InjectView(R.id.empty_tip)
+        
         TextView emptyTip;
-        @Optional
-        @InjectView(R.id.chart_pie)
+        
         PieChartView pie;
-        @Optional
-        @InjectView(R.id.icon_left)
+        
         MaterialIconView iconLeft;
-        @Optional
-        @InjectView(R.id.icon_right)
+        
         MaterialIconView iconRight;
-        @Optional
-        @InjectView(R.id.all)
+        
         MaterialIconView all;
 
         viewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            date = view.findViewById(R.id.date);
+            iconLeft =  view.findViewById(R.id.icon_left);
+            iconRight = view.findViewById(R.id.icon_right);
+            all = view.findViewById(R.id.all);
+            pie = view.findViewById(R.id.chart_pie);
+            emptyTip = view.findViewById(R.id.empty_tip);
+            tags = view.findViewById(R.id.tags);
+            expanseSum = view.findViewById(R.id.expanse);
         }
     }
 

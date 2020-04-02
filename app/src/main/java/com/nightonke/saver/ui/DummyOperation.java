@@ -1,18 +1,19 @@
 package com.nightonke.saver.ui;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
 
 /**
  * Created by 伟平 on 2015/10/30.
  */
 public class DummyOperation extends AsyncTask<Void, Integer, Void> {
 
-    SuperActivityToast mSuperActivityToast;
 
-    public DummyOperation(SuperActivityToast superActivityToast) {
-        this.mSuperActivityToast = superActivityToast;
+    private Context mContext;
+    public DummyOperation(Context c) {
+        mContext = c;
 
     }
 
@@ -40,20 +41,23 @@ public class DummyOperation extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected void onPostExecute(Void voids) {
-        mSuperActivityToast.dismiss();
 
     }
 
     @Override
     protected void onProgressUpdate(Integer... progress) {
         super.onProgressUpdate(progress);
-        mSuperActivityToast.setProgress(progress[0]);
+        toast(progress[0]);
 
     }
 
     @Override
     protected void onCancelled() {
         super.onCancelled();
-        SuperActivityToast.cancelAllSuperActivityToasts();
+
+    }
+
+    private void toast(int msg) {
+        Toast.makeText(mContext,""+msg, Toast.LENGTH_LONG).show();
     }
 }

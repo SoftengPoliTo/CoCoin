@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.melnykov.fab.FloatingActionButton;
 import com.nightonke.saver.R;
@@ -126,7 +125,6 @@ public class ReportViewFragment extends Fragment
     private Calendar from = Calendar.getInstance();
     private Calendar to = Calendar.getInstance();
 
-    private SuperToast superToast;
 
     private boolean IS_EMPTY = false;
 
@@ -281,13 +279,6 @@ public class ReportViewFragment extends Fragment
         super.onCreate(savedInstanceState);
 //        CoCoinFragmentManager.reportViewFragment = this;
         mContext = getContext();
-        superToast = new SuperToast(mContext);
-        superToast.setAnimations(SuperToast.Animations.POPUP);
-        superToast.setDuration(SuperToast.Duration.SHORT);
-        superToast.setTextColor(Color.parseColor("#ffffff"));
-        superToast.setTextSize(SuperToast.TextSize.SMALL);
-        superToast.setBackground(SuperToast.Background.RED);
-        superToast.getTextView().setTypeface(CoCoinUtil.typefaceLatoLight);
     }
 
     @Override

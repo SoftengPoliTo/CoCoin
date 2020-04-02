@@ -116,22 +116,21 @@ public class DrawerMonthViewRecyclerViewAdapter
 
     public class viewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
-        @Optional
-        @InjectView(R.id.month)
+        
         TextView month;
-        @Optional
-        @InjectView(R.id.year)
+        
         TextView year;
-        @Optional
-        @InjectView(R.id.money)
+        
         TextView money;
-        @Optional
-        @InjectView(R.id.sum)
+        
         TextView sum;
 
         viewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            month = view.findViewById(R.id.month);
+            year = view.findViewById(R.id.year);
+            money = view.findViewById(R.id.money);
+            sum = view.findViewById(R.id.sum);
             view.setOnClickListener(this);
         }
 

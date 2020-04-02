@@ -17,7 +17,6 @@ import com.nightonke.saver.R;
 import com.nightonke.saver.model.CoCoin;
 import com.nightonke.saver.model.RecordManager;
 import com.nightonke.saver.util.CoCoinUtil;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +159,6 @@ public class SplashActivity extends Activity {
         protected String doInBackground(String... params) {
             Looper.prepare();
             Bmob.initialize(CoCoinApplication.getAppContext(), CoCoin.APPLICATION_ID);
-            CrashReport.initCrashReport(CoCoinApplication.getAppContext(), "900018935", false);
             RecordManager.getInstance(CoCoinApplication.getAppContext());
             CoCoinUtil.init(CoCoinApplication.getAppContext());
             return null;
